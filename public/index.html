@@ -10,19 +10,42 @@
   <body ng-init='start = true'>
 
     <div class='container'>
+
+      <div class='row'>
+        <div class='col-md-12'>
+          <div class="jumbotron" id='jumbotron'>
+            <h2>Find where the world's monsters like to hangout!</h2>
+          </div>
+        </div>
+      </div>
+
+      <div class='row'>
+        <div class='col-md-12'>
+
+        </div>
+      </div>
+
       <div class='panel panel-default' id='monster-search'>
         <div class='panel-body'>
-          <h2 id='header-text'>Find where the world's monsters like to hangout!</h2><br>
           <div class='row'>
             <div class='col-md-3'>
               <div class='container-search'>
-                <label for='searchMonsterDropdown'>Select A Monster</label><br>
-                <input type='text' id='searchMonsterDropdown' placeholder='dropdown'>
+              <label for='search-dropdown'>Select A Monster</label>
+              <div class="dropdown" id='search-dropdown'>
+                <button class="btn btn-default dropdown-toggle" type="button" id="monster-dropdown" data-id='btn-deck-dropdown' data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                  Monster Names
+                  <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="deck-dropdown" id='monster-dropdown-items' data-id='deck-dropdown-items'>
+                  <li><a href="">Monster #1</a></li>
+                  <li><a href="">Monster #2</a></li>
+                </ul>
+              </div>
               </div>
             </div>
             <div class='col-md-6'>
               <div class='container-search'>
-                <label for='searchMonsterDropdown'>Enter In A Monster's Name</label><br>
+                <label for='searchMonsterName'>Enter In A Monster's Name</label><br>
                 <input type='text' id='searchMonsterName' maxlength="100" placeholder='Enter Monster Name Here'>
                 <button type='button' class='btn btn-primary'>Search!</button>
               </div>
@@ -33,8 +56,7 @@
 
       <div class='row'>
         <div class='col-md-3 col-sm-12'>
-
-          <div class='panel panel-default'>
+          <div class='panel panel-default' id='panel-monster-list'>
             <div class='panel-heading panel-heading-center'>
               Choose The Monster
             </div>
@@ -44,48 +66,56 @@
                   <h4 class="list-group-item-heading">Monster #1</h4>
                 </a>
                 <a href="#" class="list-group-item">
-                  <h4 class="list-group-item-heading">Monster #2</h4>
+                  <h4 class="list-group-item-heading">Monster #1</h4>
                 </a>
                 <a href="#" class="list-group-item">
-                  <h4 class="list-group-item-heading">Monster #3</h4>
+                  <h4 class="list-group-item-heading">Monster #1</h4>
                 </a>
                 <a href="#" class="list-group-item">
-                  <h4 class="list-group-item-heading">Monster #4</h4>
+                  <h4 class="list-group-item-heading">Monster #1</h4>
                 </a>
                 <a href="#" class="list-group-item">
-                  <h4 class="list-group-item-heading">Monster #5</h4>
+                  <h4 class="list-group-item-heading">Monster #1</h4>
                 </a>
                 <a href="#" class="list-group-item">
-                  <h4 class="list-group-item-heading">Monster #6</h4>
+                  <h4 class="list-group-item-heading">Monster #1</h4>
                 </a>
                 <a href="#" class="list-group-item">
-                  <h4 class="list-group-item-heading">Monster #7</h4>
+                  <h4 class="list-group-item-heading">Monster #1</h4>
                 </a>
                 <a href="#" class="list-group-item">
-                  <h4 class="list-group-item-heading">Monster #8</h4>
+                  <h4 class="list-group-item-heading">Monster #1</h4>
                 </a>
                 <a href="#" class="list-group-item">
-                  <h4 class="list-group-item-heading">Monster #9</h4>
+                  <h4 class="list-group-item-heading">Monster #1</h4>
                 </a>
                 <a href="#" class="list-group-item">
-                  <h4 class="list-group-item-heading">Monster #10</h4>
+                  <h4 class="list-group-item-heading">Monster #1</h4>
                 </a>
                 <a href="#" class="list-group-item">
-                  <h4 class="list-group-item-heading">Monster #10</h4>
+                  <h4 class="list-group-item-heading">Monster #1</h4>
                 </a>
                 <a href="#" class="list-group-item">
-                  <h4 class="list-group-item-heading">Monster #10</h4>
+                  <h4 class="list-group-item-heading">Monster #1</h4>
                 </a>
                 <a href="#" class="list-group-item">
-                  <h4 class="list-group-item-heading">Monster #10</h4>
+                  <h4 class="list-group-item-heading">Monster #1</h4>
                 </a>
                 <a href="#" class="list-group-item">
-                  <h4 class="list-group-item-heading">Monster #10</h4>
+                  <h4 class="list-group-item-heading">Monster #1</h4>
+                </a>
+                <a href="#" class="list-group-item">
+                  <h4 class="list-group-item-heading">Monster #1</h4>
+                </a>
+                <a href="#" class="list-group-item">
+                  <h4 class="list-group-item-heading">Monster #1</h4>
+                </a>
+                <a href="#" class="list-group-item">
+                  <h4 class="list-group-item-heading">Monster #1</h4>
                 </a>
               </div>
             </div>
           </div>
-
         </div>
         <div class='col-md-9 col-sm-12'>
           <div class='panel panel-default'>
