@@ -1,0 +1,22 @@
+{
+  "name": "monster-search",
+  "version": "1.0.0",
+  "description": "An online database of monster attacks and sightings from around the world. See where the world's most famous monsters love to spend their time!",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kaijuking/Monster-Search.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kaijuking/Monster-Search/issues"
+  },
+  "homepage": "https://github.com/kaijuking/Monster-Search#readme",
+  "dependencies": {
+    "express": "^4.13.4"
+  }
+}
