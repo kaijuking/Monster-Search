@@ -2,7 +2,10 @@ var monsters = [
   {
     japaneseName: 'ゴジラ',
     englishName: 'Godzilla',
-    alternateNames: ['King of the Monsters', 'Gojira'],
+    type: 'Japanese',
+    series: 'Showa',
+    alternateSeries: '昭和',
+    alternateNames: ['King of the Monsters', 'Gojira', 'Gigantis, The Fire Monster'],
     firstAppearanceDate: '11/3/1954',
     countryOfOrigin: 'Japan',
     height: 1000,
@@ -11,7 +14,47 @@ var monsters = [
     profilePicture: 'godzilla1954.jpg',
     images: ['image1.jpg', 'image2.jpg', 'image3.jpg'],
     locations: ['Tokyo'],
-    alternateLocations: ['東京']
+    alternateLocations: ['東京'],
+    movies: ['Godzilla: King of the Monsters'],
+    alternateMovies: ['ゴジラ']
+  },
+  {
+    japaneseName: 'ゴジラ',
+    englishName: 'Godzilla',
+    type: 'Japanese',
+    series: 'Showa',
+    alternateSeries: '昭和',
+    alternateNames: ['King of the Monsters', 'Gojira', 'Gigantis, The Fire Monster'],
+    firstAppearanceDate: '4/24/1955',
+    countryOfOrigin: 'Japan',
+    height: 1000,
+    weight: 1000,
+    powers: ['power1', 'power2', 'power3'],
+    profilePicture: 'godzilla1955.jpg',
+    images: ['image1.jpg', 'image2.jpg', 'image3.jpg'],
+    locations: ['Osaka'],
+    alternateLocations: ['大阪'],
+    movies: ['Godzilla Raids Again', 'Giganits, the Fire Monster', 'Godzilla\'s Counterattack'],
+    alternateMovies: ['ゴジラの逆襲']
+  },
+  {
+    japaneseName: 'ゴジラ',
+    englishName: 'Godzilla',
+    type: 'Japanese',
+    series: 'Showa',
+    alternateSeries: '昭和',
+    alternateNames: ['King of the Monsters', 'Gojira', 'Gigantis, The Fire Monster'],
+    firstAppearanceDate: '8/11/1962',
+    countryOfOrigin: 'Japan',
+    height: 1000,
+    weight: 1000,
+    powers: ['power1', 'power2', 'power3'],
+    profilePicture: 'godzilla1962.jpg',
+    images: ['image1.jpg', 'image2.jpg', 'image3.jpg'],
+    locations: ['Mount Fuji'],
+    alternateLocations: ['富士山'],
+    movies: ['King Kong vs Godzilla'],
+    alternateMovies: ['キングコング対ゴジラ']
   }
 ]
 

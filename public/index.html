@@ -15,7 +15,6 @@
         <div class='col-md-12'>
           <div class="jumbotron" id='jumbotron'>
             <h2>Find where the world's monsters like to hangout!</h2>
-            <p ng-repeat='monster in monsters.list'>{{monster.englishName}}</p>
           </div>
         </div>
       </div>
@@ -55,66 +54,23 @@
         </div>
       </div>
 
-      <div class='row'>
+      <div class='row' ng-controller='monstersController as monsters'>
         <div class='col-md-3 col-sm-12'>
           <div class='panel panel-default' id='panel-monster-list'>
             <div class='panel-heading panel-heading-center'>
               Choose The Monster
             </div>
             <div class='panel-body'>
-              <div class="list-group" id='monster-list'>
-                <a href="#" class="list-group-item">
-                  <h4 class="list-group-item-heading">Monster #1</h4>
-                </a>
-                <a href="#" class="list-group-item">
-                  <h4 class="list-group-item-heading">Monster #1</h4>
-                </a>
-                <a href="#" class="list-group-item">
-                  <h4 class="list-group-item-heading">Monster #1</h4>
-                </a>
-                <a href="#" class="list-group-item">
-                  <h4 class="list-group-item-heading">Monster #1</h4>
-                </a>
-                <a href="#" class="list-group-item">
-                  <h4 class="list-group-item-heading">Monster #1</h4>
-                </a>
-                <a href="#" class="list-group-item">
-                  <h4 class="list-group-item-heading">Monster #1</h4>
-                </a>
-                <a href="#" class="list-group-item">
-                  <h4 class="list-group-item-heading">Monster #1</h4>
-                </a>
-                <a href="#" class="list-group-item">
-                  <h4 class="list-group-item-heading">Monster #1</h4>
-                </a>
-                <a href="#" class="list-group-item">
-                  <h4 class="list-group-item-heading">Monster #1</h4>
-                </a>
-                <a href="#" class="list-group-item">
-                  <h4 class="list-group-item-heading">Monster #1</h4>
-                </a>
-                <a href="#" class="list-group-item">
-                  <h4 class="list-group-item-heading">Monster #1</h4>
-                </a>
-                <a href="#" class="list-group-item">
-                  <h4 class="list-group-item-heading">Monster #1</h4>
-                </a>
-                <a href="#" class="list-group-item">
-                  <h4 class="list-group-item-heading">Monster #1</h4>
-                </a>
-                <a href="#" class="list-group-item">
-                  <h4 class="list-group-item-heading">Monster #1</h4>
-                </a>
-                <a href="#" class="list-group-item">
-                  <h4 class="list-group-item-heading">Monster #1</h4>
-                </a>
-                <a href="#" class="list-group-item">
-                  <h4 class="list-group-item-heading">Monster #1</h4>
-                </a>
-                <a href="#" class="list-group-item">
-                  <h4 class="list-group-item-heading">Monster #1</h4>
-                </a>
-              </div>
+              <a href='' ng-repeat='monster in monsters.list'>
+                <div class='media' ng-click="monsters.location(monster)">
+                  <div class='media-left'>
+                    <img class='media-object' ng-src="images/{{monster.profilePicture}}" alt="...">
+                  </div>
+                  <div class='media-body'>
+                    {{monster.englishName}}
+                  </div>
+                </div>
+              </a>
             </div>
           </div>
         </div>

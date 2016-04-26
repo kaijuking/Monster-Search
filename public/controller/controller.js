@@ -8,18 +8,30 @@ function monsters($http) {
   activate();
 
   function activate() {
+    console.log('inside activate');
+    vm.test = 'test test test';
     getMonsters();
   }
 
   function getMonsters(monster) {
     console.log('inside the getMonsters function');
-    
-    var theMonster = (monster != undefined) ? monster : undefined;
+    var theMonster = monster;
 
-    var allMonters = $http.get('http://localhost:1337/monsters/' + theMonster);
+    var allMonsters = $http.get('http://localhost:1337/monsters/' + theMonster);
     allMonsters.then(function(list) {
       vm.list = list.data;
       console.log(list.data);
+    })
+  }
+
+  vm.location = function(monster) {
+    console.log(monster.locations);
+
+    var theLocation = {location: monster.locations};
+    var location = $http.post('http://localhost:1337/location/',theLocation);
+    location.then(function(mapDetails) {
+      vm.map = mapDetails.data;
+      console.log(mapDetails.data);
     })
   }
 
