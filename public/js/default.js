@@ -2,7 +2,12 @@ document.addEventListener('DOMContentLoaded', function(event) {
   console.log('document has loaded');
 });
 
-function initMap() {
+document.addEventListener('click', function(event) {
+  var theTarget = event.target;
+  console.log(theTarget);
+})
+
+function initMap(location) {
   console.log('inside the initMap function');
 
   var map;
