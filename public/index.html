@@ -7,7 +7,7 @@
     <link rel='stylesheet' href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
   </head>
-  <body ng-init='start = true'>
+  <body ng-app='monsterSearch'>
 
     <div class='container'>
 
@@ -15,6 +15,7 @@
         <div class='col-md-12'>
           <div class="jumbotron" id='jumbotron'>
             <h2>Find where the world's monsters like to hangout!</h2>
+            <p ng-repeat='monster in monsters.list'>{{monster.englishName}}</p>
           </div>
         </div>
       </div>
@@ -130,12 +131,12 @@
       </div>
 
     </div>
-
-    <script src='js/default.js'></script>
-    <script type='text/javascript' src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBLu9oOv4uRnKqx2Nu-Y-6mjptuzOtBoTg&callback=initMap" async defer></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
     <script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-route.min.js'></script>
+    <script type='text/javascript' src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBLu9oOv4uRnKqx2Nu-Y-6mjptuzOtBoTg&callback=initMap" async defer></script>
+    <script src='controller/controller.js'></script>
+    <script src='js/default.js'></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
   </body>
 </html>
