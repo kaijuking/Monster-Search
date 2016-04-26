@@ -1,6 +1,5 @@
 var locations = [
   {
-    id: '1',
     cityName: 'Tokyo',
     alternateCityName: '東京',
     stateName: 'Tokyo',
@@ -9,10 +8,9 @@ var locations = [
     alternateCountryName: '日本',
     longitude: 35.652832,
     latitude: 139.839478,
-    numberOfMonsters = 1
+    numberOfMonsters: 1
   },
   {
-    id: '2',
     cityName: 'Sapparo',
     alternateCityName: '札幌市',
     stateName: 'Hokkaido',
@@ -21,10 +19,9 @@ var locations = [
     alternateCountryName: '日本',
     longitude: 43.0621,
     latitude: 141.3544,
-    numberOfMonsters = 1
+    numberOfMonsters: 1
   },
   {
-    id: '3',
     cityName: 'Osaka',
     alternateCityName: '大阪',
     stateName: 'Osaka',
@@ -33,7 +30,7 @@ var locations = [
     alternateCountryName: '日本',
     longitude: 34.6937,
     latitude: 135.5022,
-    numberOfMonsters = 1
+    numberOfMonsters: 1
   }
 ]
 
