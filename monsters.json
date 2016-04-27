@@ -1,68 +1,59 @@
 {
-  "Godzilla (1954)":
-  [
-    {
-      "japaneseName": "ゴジラ (1954)",
-      "englishName": "Godzilla (1954)",
-      "type": "Japanese",
-      "series": "Showa",
-      "alternateSeries": "昭和",
-      "alternateNames": ["King of the Monsters", "Gojira", "Gigantis, The Fire Monster"],
-      "firstAppearanceDate": "11/3/1954",
-      "countryOfOrigin": "Japan",
-      "height": 1000,
-      "weight": 1000,
-      "powers": ["power1", "power2", "power3"],
-      "profilePicture": "godzilla1954.jpg",
-      "images": ["image1.jpg", "image2.jpg", "image3.jpg"],
-      "locations": ["Tokyo"],
-      "alternateLocations": ["東京"],
-      "movies": ["Godzilla: King of the Monsters"],
-      "alternateMovies": ["ゴジラ"]
-    }
-  ],
-  "Godzilla (1955)":
-  [
-    {
-      "japaneseName": "ゴジラ (1955)",
-      "englishName": "Godzilla (1955)",
-      "type": "Japanese",
-      "series": "Showa",
-      "alternateSeries": "昭和",
-      "alternateNames": ["King of the Monsters", "Gojira", "Gigantis, The Fire Monster"],
-      "firstAppearanceDate": "4/24/1955",
-      "countryOfOrigin": "Japan",
-      "height": 1000,
-      "weight": 1000,
-      "powers": ["power1", "power2", "power3"],
-      "profilePicture": "godzilla1955.jpg",
-      "images": ["image1.jpg", "image2.jpg", "image3.jpg"],
-      "locations": ["Osaka"],
-      "alternateLocations": ["大阪"],
-      "movies": ["Godzilla Raids Again", "Giganits, the Fire Monster", "Godzillas Counterattack"],
-      "alternateMovies": ["ゴジラの逆襲"]
-    }
-  ],
-  "Godzilla (1962)":
-  [
-    {
-      "japaneseName": "ゴジラ (1962)",
-      "englishName": "Godzilla (1962)",
-      "type": "Japanese",
-      "series": "Showa",
-      "alternateSeries": "昭和",
-      "alternateNames": ["King of the Monsters", "Gojira", "Gigantis, The Fire Monster"],
-      "firstAppearanceDate": "11/3/1962",
-      "countryOfOrigin": "Japan",
-      "height": 1000,
-      "weight": 1000,
-      "powers": ["power1", "power2", "power3"],
-      "profilePicture": "godzilla1954.jpg",
-      "images": ["image1.jpg", "image2.jpg", "image3.jpg"],
-      "locations": ["Tokyo"],
-      "alternateLocations": ["東京"],
-      "movies": ["King Kong vs Godzilla"],
-      "alternateMovies": ["キングコング対ゴジラ"]
-    }
-  ]
+  "japaneseName": "ゴジラ (1954)",
+  "englishName": "Godzilla (1954)",
+  "type": "Japanese",
+  "series": "Showa",
+  "alternateSeries": "昭和",
+  "alternateNames": ["King of the Monsters", "Gojira", "Gigantis, The Fire Monster"],
+  "firstAppearanceDate": "11/3/1954",
+  "countryOfOrigin": "Japan",
+  "height": 1000,
+  "weight": 1000,
+  "powers": ["power1", "power2", "power3"],
+  "profilePicture": "godzilla1954.jpg",
+  "images": ["image1.jpg", "image2.jpg", "image3.jpg"],
+  "locations": ["Tokyo"],
+  "alternateLocations": ["東京"],
+  "movies": ["Godzilla: King of the Monsters"],
+  "alternateMovies": ["ゴジラ"]
+}
+
+{
+  "japaneseName": "ゴジラ (1955)",
+  "englishName": "Godzilla (1955)",
+  "type": "Japanese",
+  "series": "Showa",
+  "alternateSeries": "昭和",
+  "alternateNames": ["King of the Monsters", "Gojira", "Gigantis, The Fire Monster"],
+  "firstAppearanceDate": "4/24/1955",
+  "countryOfOrigin": "Japan",
+  "height": 1000,
+  "weight": 1000,
+  "powers": ["power1", "power2", "power3"],
+  "profilePicture": "godzilla1955.jpg",
+  "images": ["image1.jpg", "image2.jpg", "image3.jpg"],
+  "locations": ["Osaka"],
+  "alternateLocations": ["大阪"],
+  "movies": ["Godzilla Raids Again", "Giganits, the Fire Monster", "Godzillas Counterattack"],
+  "alternateMovies": ["ゴジラの逆襲"]
+}
+
+{
+  "japaneseName": "ゴジラ (1962)",
+  "englishName": "Godzilla (1962)",
+  "type": "Japanese",
+  "series": "Showa",
+  "alternateSeries": "昭和",
+  "alternateNames": ["King of the Monsters", "Gojira", "Gigantis, The Fire Monster"],
+  "firstAppearanceDate": "11/3/1962",
+  "countryOfOrigin": "Japan",
+  "height": 1000,
+  "weight": 1000,
+  "powers": ["power1", "power2", "power3"],
+  "profilePicture": "godzilla1954.jpg",
+  "images": ["image1.jpg", "image2.jpg", "image3.jpg"],
+  "locations": ["Tokyo"],
+  "alternateLocations": ["東京"],
+  "movies": ["King Kong vs Godzilla"],
+  "alternateMovies": ["キングコング対ゴジラ"]
 }

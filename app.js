@@ -39,11 +39,13 @@ app.get('/monsters/:monster', function(req, res) {
 });
 
 app.post('/location/', jsonParser, function(req, res) {
-  console.log(req.params.location);
+  console.log(req.body.location);
+
+  var theLocation = req.body.location;
 
   var key = 'AIzaSyDgL9xZqzlR727rK2eXAWS-tcqUiRVovW8';
 
-  var theURL = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + req.params.location + '&key=' + key
+  var theURL = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + theLocation[0] + '&key=' + key
 
   var p1 = new Promise(function(resolve, reject) {
     request(theURL, function(error, response, body) {
