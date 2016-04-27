@@ -24,6 +24,8 @@ function monsters($http) {
     })
   }
 
+  
+
   vm.location = function(monster) {
     var theLocation = {location: monster.locations};
     console.log(theLocation);
@@ -34,6 +36,15 @@ function monsters($http) {
       console.log(info);
       console.log(info.results[0].geometry.location);
       updateMap(info.results[0].geometry.location.lat, info.results[0].geometry.location.lng, monster.englishName)
+    })
+  }
+
+  vm.search = function() {
+    var theMonster = document.getElementById('searchMonsterName').value;
+    var monster = $http.get('http://localhost:1337/monsters/' + theMonster);
+    monster.then(function(searchResult) {
+      vm.searchResult = searchResult.data;
+      console.log(vm.searchResult);
     })
   }
 
@@ -58,4 +69,8 @@ function updateMap(lat, lng, name) {
   });
 
   theLocation.setMap(map);
+
+  theLocation.addListener('click', function() {
+    window.alert(theLocation.title);
+  })
 }

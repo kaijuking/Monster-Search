@@ -3,8 +3,12 @@ body {
   width: 100%;
 }
 
-.panel-heading-center {
+/*.panel-heading-center {
   text-align:center;
+}*/
+
+.panel-heading {
+  text-align: center;
 }
 
 #map {
