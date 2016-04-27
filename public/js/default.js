@@ -1,5 +1,9 @@
+var map;
+var defaultMarkers;
+
 document.addEventListener('DOMContentLoaded', function(event) {
   console.log('document has loaded');
+  setupDefaultMarkers();
 });
 
 document.addEventListener('click', function(event) {
@@ -10,27 +14,45 @@ document.addEventListener('click', function(event) {
 function initMap(location) {
   console.log('inside the initMap function');
 
-  var map;
   var tokyo = {lat: 35.6895, lng: 139.6917};
-  var sapporo = {lat: 43.0621, lng: 141.3544};
 
   map = new google.maps.Map(document.getElementById('map'), {
     center: tokyo,
-    zoom: 8
-  });
+    zoom: 5
+  })
 
-  var tokyo = new google.maps.Marker({
-    position: tokyo,
-    map: map,
-    title: 'Tokyo'
-  });
+}
 
-  var sapporo = new google.maps.Marker({
-    position: sapporo,
-    map: map,
-    title: 'Sapparo'
-  });
+function setupDefaultMarkers() {
+  var markers = new XMLHttpRequest();
+  markers.open('GET', '/defaultMarkers', true);
+  markers.send();
 
-  tokyo.setMap(map);
-  sapporo.setMap(map);
+  markers.addEventListener('load', function() {
+    var theResults = JSON.parse(markers.responseText);
+    console.log(theResults);
+    defaultMarkers = theResults;
+    addDefaultMarkers(defaultMarkers);
+  })
+}
+
+function addDefaultMarkers(items) {
+  for(var i = 0; i < items.length; i++) {
+
+    var latlng = {lat: Number.parseFloat(items[i].latitude), lng: Number.parseFloat(items[i].longitude)};
+
+    var title = items[i].locationName;
+
+    var theLocation = new google.maps.Marker({
+      position: latlng,
+      map: map,
+      title: title
+    })
+
+    theLocation.setMap(map);
+
+    theLocation.addListener('click', function() {
+      window.alert(theLocation.title);
+    })
+  }
 }

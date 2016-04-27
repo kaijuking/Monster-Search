@@ -18,7 +18,13 @@ var allLocations = require('./locations.js');
 var allMonsters = require('./monsters.js');
 
 app.get('/monsters/:monster', function(req, res) {
-  var theMonster = (req.params.monster === 'undefined') ? {} : req.params.monster;
+  var name = '"\""' + req.params.monster + '\"""'
+  console.log('the name is: ' + name);
+  //var theMonster = (req.params.monster === 'undefined') ? {} : {englishName: req.params.monster};
+  var theMonster = (req.params.monster === 'undefined') ? {} : {$text: {$search: name}};
+  console.log('----');
+  console.log(theMonster);
+  console.log('----');
 
   myClient.connect(url, function(error, database) {
     if(error) {
@@ -62,6 +68,27 @@ app.post('/location/', jsonParser, function(req, res) {
   });
 
 })
+
+
+app.get('/defaultMarkers', function(req, res) {
+  myClient.connect(url, function(error, database) {
+    if(error) {
+      console.log(error);
+    } else {
+      var myCollection = database.collection('defaultMarkers');
+      myCollection.find({}).toArray(function(error, docs) {
+        if(error) {
+          res.send(error);
+          database.close();
+        } else {
+          res.send(docs);
+          database.close();
+        }
+      })
+    }
+  })
+})
+
 
 /*Configure Which Port To Listen For LocalHost*/
 var port = process.env.PORT || 1337;

@@ -7,9 +7,9 @@
     <link rel='stylesheet' href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
   </head>
-  <body ng-app='monsterSearch'>
+  <body ng-app='monsterSearch' ng-init='start = true'>
 
-    <div class='container'>
+    <div class='container' ng-controller='monstersController as monsters'>
 
       <div class='row'>
         <div class='col-md-12'>
@@ -28,26 +28,56 @@
       <div class='panel panel-default' id='monster-search'>
         <div class='panel-body'>
           <div class='row'>
-            <div class='col-md-3'>
-              <div class='container-search'>
-              <label for='search-dropdown'>Select A Monster</label>
-              <div class="dropdown" id='search-dropdown'>
-                <button class="btn btn-default dropdown-toggle" type="button" id="monster-dropdown" data-id='btn-deck-dropdown' data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                  Monster Names
-                  <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu" aria-labelledby="deck-dropdown" id='monster-dropdown-items' data-id='deck-dropdown-items'>
-                  <li><a href="">Monster #1</a></li>
-                  <li><a href="">Monster #2</a></li>
-                </ul>
-              </div>
-              </div>
-            </div>
-            <div class='col-md-6'>
-              <div class='container-search'>
-                <label for='searchMonsterName'>Enter In A Monster's Name</label><br>
-                <input type='text' id='searchMonsterName' maxlength="100" placeholder='Enter Monster Name Here'>
-                <button type='button' class='btn btn-primary'>Search!</button>
+            <div class='col-md-12'>
+              <ul class='nav nav-tabs' role='tablist'>
+                <li role='presentation' class='active'>
+                  <a href='#search' aria-controls='search' role='tab' data-toggle='tab'>Search For A Monster</a>
+                </li>
+                <li role='presentation'>
+                  <a href='#report' aria-controls='report' role='tab' data-toggle='tab'>Report A New Sighting</a>
+                </li>
+              </ul>
+              <div class='tab-content'>
+                <div role='tabpanel' class='tab-pane active' id='search'>
+                  <form class='form-inline'>
+                    <div class='form-group'>
+                      <h3>Want to know where a particular monster has been sighted?!</h3>
+                      <h4>Enter in a monster name and see where to find them!</h4>
+                      <br>
+                      <div class='input-group'>
+                        <label class='sr-only' for='searchMonsterName'>Enter In A Monster Name</label>
+                        <input type='text' class='form-control' placeholder='search monster' id='searchMonsterName'>
+                        <span class='input-group-btn'>
+                          <button class='btn btn-default' ng-click="monsters.search()" type='button'>Search</button>
+                        </span>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+                <div role='tabpanel' class='tab-pane' id='report'>
+                  <h3>Encounter or sighted a new monster?!</h3>
+                  <h4>Report any new sightings here!</h4>
+                  <br>
+                  <form class='form-inline'>
+                    <div class='form-group'>
+                      <label class='sr-only' for='reportCity'>City</label>
+                      <input type='text' class='form-control' id='reportCity' placeholder='city name'>
+                    </div>
+                    <div class='form-group'>
+                      <label class='sr-only' for='reportState'>City</label>
+                      <input type='text' class='form-control' id='reportState' placeholder='state/prefecture name'>
+                    </div>
+                    <div class='form-group'>
+                      <div class='input-group'>
+                        <label class='sr-only' for='reportCountry'>City</label>
+                        <input type='text' class='form-control' id='reportCountry' placeholder='country name'>
+                        <span class='input-group-btn'>
+                          <button class='btn btn-default' type='button'>Search</button>
+                        </span>
+                      </div>
+                    </div>
+                  </form>
+                </div>
               </div>
             </div>
           </div>
@@ -57,7 +87,7 @@
       <div class='row' ng-controller='monstersController as monsters'>
         <div class='col-md-3 col-sm-12'>
           <div class='panel panel-default' id='panel-monster-list'>
-            <div class='panel-heading panel-heading-center'>
+            <div class='panel-heading'>
               Choose The Monster
             </div>
             <div class='panel-body'>
@@ -76,11 +106,38 @@
         </div>
         <div class='col-md-9 col-sm-12'>
           <div class='panel panel-default'>
-            <div class='panel-heading panel-heading-center'>
+            <div class='panel-heading'>
               Monster Locator Map
             </div>
             <div class='panel-body'>
               <div id='map'></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class='row' id='monsterLocationInfo'>
+        <div class='col-md-12'>
+          <div class='panel panel-default'>
+            <div class='panel-heading'>Monster/Location Info</div>
+            <div class='panel-body'>
+              <div class='media' ng-repeat='monster in monsters.searchResult'>
+                <div class='media-left'>
+                  <img class='media-object' ng-src="images/{{monster.profilePicture}}" alt="...">
+                </div>
+                <div class='media-body'>
+                  <b>English Name: </b> {{monster.englishName}}<br>
+                  <b>Japanese Name: </b> {{monster.japaneseName}}<br>
+                  <b>Alternate Names: </b>{{monster.alternateNames}}<br>
+                  <b>First Appearance: </b>{{monster.firstAppearanceDate}}<br>
+                  <b>Country of Origin: </b>{{monster.countryOfOrigin}}<br>
+                  <b>Height: </b>{{monster.height}}<br>
+                  <b>Weight: </b>{{monster.weight}}<br>
+                  <b>Powers: </b>{{monster.powers}}<br>
+                  <b>Sighted In: </b>{{monster.locations}}<br>
+                  <b>Appeared In: </b>{{monster.movies}}
+                </div>
+              </div>
             </div>
           </div>
         </div>
