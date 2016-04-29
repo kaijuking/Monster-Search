@@ -48,7 +48,7 @@
                         <label class='sr-only' for='searchMonsterName'>Enter In A Monster Name</label>
                         <input type='text' class='form-control' placeholder='search monster' id='searchMonsterName'>
                         <span class='input-group-btn'>
-                          <button class='btn btn-default' ng-click="monsters.search()" type='button'>Search</button>
+                          <button class='btn btn-default' ng-click="monsters.location(); monsters.search()" type='button'>Search</button>
                         </span>
                       </div>
                     </div>
@@ -84,20 +84,20 @@
         </div>
       </div>
 
-      <div class='row' ng-controller='monstersController as monsters'>
+      <div class='row'>
         <div class='col-md-3 col-sm-12'>
           <div class='panel panel-default' id='panel-monster-list'>
             <div class='panel-heading'>
               Choose The Monster
             </div>
-            <div class='panel-body'>
+            <div class='panel-body monster-list'>
               <a href='' ng-repeat='monster in monsters.list'>
-                <div class='media' ng-click="monsters.location(monster)">
+                <div class='media' ng-click="monsters.location(monster); monsters.search(monster)">
                   <div class='media-left'>
-                    <img class='media-object' ng-src="images/{{monster.profilePicture}}" alt="...">
+                    <img class='media-object' ng-src="images/icon/{{monster.profilePicture}}" alt="...">
                   </div>
                   <div class='media-body'>
-                    {{monster.englishName}}
+                    {{monster.nameEng}}
                   </div>
                 </div>
               </a>
@@ -120,22 +120,28 @@
         <div class='col-md-12'>
           <div class='panel panel-default'>
             <div class='panel-heading'>Monster/Location Info</div>
-            <div class='panel-body'>
+            <div class='panel-body monster-list'>
               <div class='media' ng-repeat='monster in monsters.searchResult'>
                 <div class='media-left'>
-                  <img class='media-object' ng-src="images/{{monster.profilePicture}}" alt="...">
+                  <img class='media-object profile-picture' ng-src="images/profile/{{monster.profilePicture}}" alt="...">
                 </div>
                 <div class='media-body'>
-                  <b>English Name: </b> {{monster.englishName}}<br>
-                  <b>Japanese Name: </b> {{monster.japaneseName}}<br>
-                  <b>Alternate Names: </b>{{monster.alternateNames}}<br>
+                  <b>Name: </b> <a ng-href='{{monster.website}}'>{{monster.nameEng}} / {{monster.nameJp}}</a><br>
                   <b>First Appearance: </b>{{monster.firstAppearanceDate}}<br>
-                  <b>Country of Origin: </b>{{monster.countryOfOrigin}}<br>
-                  <b>Height: </b>{{monster.height}}<br>
-                  <b>Weight: </b>{{monster.weight}}<br>
-                  <b>Powers: </b>{{monster.powers}}<br>
-                  <b>Sighted In: </b>{{monster.locations}}<br>
-                  <b>Appeared In: </b>{{monster.movies}}
+                  <b>Country of Origin: </b>{{monster.originEng}}<br>
+                  <b>Height: </b>{{monster.height}} , <b>Weight: </b>{{monster.weight}}<br>
+                  <b>Sighted In:</b><br>
+                  <ul>
+                    <li ng-repeat='locations in monster.locationsEng'>{{locations}}</li>
+                  </ul>
+                  <b>Appeared In:</b><br>
+                  <ul>
+                    <li ng-repeat='movies in monster.movieNamesEng'>{{movies}}</li>
+                  </ul>
+                  <b>Powers:</b><br>
+                  <ul>
+                    <li ng-repeat='powers in monster.powersEng'>{{powers}}</li>
+                  </ul>
                 </div>
               </div>
             </div>
