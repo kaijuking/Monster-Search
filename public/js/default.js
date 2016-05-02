@@ -3,13 +3,26 @@ var defaultMarkers;
 
 document.addEventListener('DOMContentLoaded', function(event) {
   console.log('document has loaded');
-  setupDefaultMarkers();
+  //setupDefaultMarkers();
+  navigator.geolocation.getCurrentPosition(success, error);
 });
 
 document.addEventListener('click', function(event) {
   var theTarget = event.target;
   console.log(theTarget);
 })
+
+function success(position) {
+  var lat = position.coords.latitude;
+  var lng = position.coords.longitude;
+
+  console.log('lat is: ' + lat);
+  console.log('lng is: ' + lng);
+}
+
+function error() {
+  console.log('error getting geolocation');
+}
 
 function initMap(location) {
   console.log('inside the initMap function');

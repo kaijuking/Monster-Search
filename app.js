@@ -17,6 +17,7 @@ app.use(defaultMiddleware);
 var allLocations = require('./locations.js');
 var allMonsters = require('./monsters.js');
 var resultsArray;
+var mapDetails;
 
 app.get('/monsters/:monster', function(req, res) {
   var name = '"\""' + req.params.monster + '\"""'
@@ -44,6 +45,7 @@ app.get('/monsters/:monster', function(req, res) {
 app.post('/locationBySearchValue/', jsonParser, function(req, res) {
   var key = 'AIzaSyDgL9xZqzlR727rK2eXAWS-tcqUiRVovW8';
   resultsArray = [];
+  mapDetails = [];
   var tmpArray = [];
   var count = 0;
 
@@ -64,21 +66,30 @@ app.post('/locationBySearchValue/', jsonParser, function(req, res) {
             }
           }
 
+          console.log('the count is: ' + count);
+
           for(var i = 0; i < docs.length; i++) {
             for(var y = 0; y < docs[i].locationsEng.length; y++) {
               tmpArray.push({name: docs[i].nameEng, picture: docs[i].iconPicture, location: docs[i].locationsEng[y]});
             }
           }
 
-          for(var i = 0; i < tmpArray.length; i++) {
-            var theURL = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + tmpArray[i].location + '&key=' + key;
-            request(theURL, function(error, response, body) {
-              if(!error && response.statusCode == 200) {
-                resultsArray.push('test');
-                if(resultsArray.length === count) {
-                  res.send(resultsArray);
-                  database.close();
+          for(var x = 0; x < tmpArray.length; x++) {
+            var theURL = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + tmpArray[x].location + '&key=' + key;
+
+            var p1 = new Promise(function(resolve, reject) {
+              request(theURL, function(error, response, body) {
+                if(!error && response.statusCode == 200) {
+                  resolve(response);
                 }
+              })
+            })
+
+            p1.then(function(value) {
+              mapDetails.push({mapdetails: value});
+              if(mapDetails.length == count) {
+                var theResults = [tmpArray, mapDetails];
+                res.send(theResults);
               }
             })
           }
