@@ -14,7 +14,8 @@ function monsters($http) {
 
   function getMonsters(monster) {
     var theMonster = monster;
-    var allMonsters = $http.get('http://localhost:1337/monsters/' + theMonster);
+    //var allMonsters = $http.get('http://localhost:1337/monsters/' + theMonster);
+    var allMonsters = $http.get('/monsters/' + theMonster);
     allMonsters.then(function(list) {
       vm.list = list.data;
     })
@@ -23,7 +24,8 @@ function monsters($http) {
   vm.location = function(monster) {
     if(monster === undefined) {
       var theLocation = {location: document.getElementById('searchMonsterName').value};
-      var location = $http.post('http://localhost:1337/locationBySearchValue/', theLocation);
+      //var location = $http.post('http://localhost:1337/locationBySearchValue/', theLocation);
+      var location = $http.post('/locationBySearchValue/', theLocation);
       location.then(function(theResults) {
         var theMonsters = theResults.data[0];
         var theLocations = theResults.data[1];
@@ -31,7 +33,7 @@ function monsters($http) {
       })
     } else {
       var theLocation = {location: monster.locationsEng};
-      var location = $http.post('http://localhost:1337/location/',theLocation);
+      var location = $http.post('/location/',theLocation);
       location.then(function(mapDetails) {
         updateMap(mapDetails, monster.nameEng, monster.iconPicture);
       })
@@ -46,7 +48,7 @@ function monsters($http) {
       theMonster = monster.nameEng;
     }
 
-    var monster = $http.get('http://localhost:1337/monsters/' + theMonster);
+    var monster = $http.get('/monsters/' + theMonster);
     monster.then(function(searchResult) {
       vm.searchResult = searchResult.data;
     })
