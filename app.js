@@ -7,8 +7,8 @@ var app = express();
 /*Required For Mongodb create(POST), read(GET), update(PUT) and delete(DELETE)*/
 var mongo = require('mongodb');
 var myClient = mongo.MongoClient;
-//var url = 'mongodb://localhost/monsterSearch';
-var url = 'mongodb://heroku_86jxj8cp:rukdrubdo1ook0bk3bkuajbceu@ds013212.mlab.com:13212/heroku_86jxj8cp';
+var url = 'mongodb://localhost/monsterSearch';
+//var url = 'mongodb://heroku_86jxj8cp:rukdrubdo1ook0bk3bkuajbceu@ds013212.mlab.com:13212/heroku_86jxj8cp';
 
 /*Middleware To Use*/
 var defaultMiddleware = express.static('./public');
@@ -138,6 +138,17 @@ app.get('/defaultMarkers', function(req, res) {
           database.close();
         }
       })
+    }
+  })
+})
+
+app.post('/wiki', jsonParser, function(req, res) {
+  console.log(req.body.location);
+  var theLocation = req.body.location;
+  var theURL = 'https://en.wikipedia.org/w/api.php?action=query&titles=' + theLocation + '&prop=revisions&rvprop=content&format=json';
+  request(theURL, function(error, response, body) {
+    if(!error && response.statusCode == 200) {
+      res.send(response);
     }
   })
 })

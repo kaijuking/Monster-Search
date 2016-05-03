@@ -3,8 +3,7 @@ var defaultMarkers;
 
 document.addEventListener('DOMContentLoaded', function(event) {
   console.log('document has loaded');
-  //setupDefaultMarkers();
-  navigator.geolocation.getCurrentPosition(success, error);
+  // navigator.geolocation.getCurrentPosition(success, error);
 });
 
 document.addEventListener('click', function(event) {
