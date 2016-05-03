@@ -27,6 +27,7 @@ function monsters($http) {
       //var location = $http.post('http://localhost:1337/locationBySearchValue/', theLocation);
       var location = $http.post('/locationBySearchValue/', theLocation);
       location.then(function(theResults) {
+        console.log(theResults);
         var theMonsters = theResults.data[0];
         var theLocations = theResults.data[1];
         updateMultiMap(theMonsters, theLocations);
