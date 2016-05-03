@@ -4,7 +4,8 @@
   "description": "An online database of monster attacks and sightings from around the world. See where the world's most famous monsters love to spend their time!",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
   },
   "repository": {
     "type": "git",
