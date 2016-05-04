@@ -78,13 +78,37 @@ function updateMap(mapDetails, name, iconPicture) {
 
     theLocation.setMap(map);
     theLocation.addListener('click', function() {
-      //window.alert(theLocation.title);
-      var infowindow = new google.maps.InfoWindow({
-        content: "test"
-      });
+      map.panTo(theLocation.position);
+      map.setZoom(15);
+      var infowindow = new google.maps.InfoWindow();
+      var service = new google.maps.places.PlacesService(map);
+      service.nearbySearch({
+        location: theLocation.position,
+        radius: 500,
+        type: ['store', 'restaurant', 'lodging', 'church', 'bank', 'train_station', 'subway_station', 'food']
+      }, callback);
 
-      infowindow.open(map, theLocation);
-      getWiki('Tokyo');
+      function callback(results, status) {
+        if(status === google.maps.places.PlacesServiceStatus.OK) {
+          for(var i = 0; i < results.length; i++) {
+            createMarker(results[i], results[i].place_id);
+          }
+        }
+      }
+
+      function createMarker(place, placeId) {
+        var placeLoc = place.geometry.location;
+        var marker = new google.maps.Marker({
+          map: map,
+          position: place.geometry.location,
+          placeId: placeId
+        });
+
+        google.maps.event.addListener(marker, 'click', function() {
+          console.log('the place id is: ' + marker.placeId);
+          placeDetails(service, marker, marker.placeId, map);
+        });
+      }
 
     })
   }
@@ -159,8 +183,9 @@ function placeMarker(locationsArray, theName, thePicture, theLocation, theCoordi
     })
 
     theMarker.addListener('click', function() {
-      infowindow.open(theMap, theMarker);
-      getWiki(theLocation);
+      theMap.panTo(theMarker.position);
+      theMap.setZoom(15);
+      places(theMap, theMarker.position);
     })
 
   } else {
@@ -182,8 +207,8 @@ function placeMarker(locationsArray, theName, thePicture, theLocation, theCoordi
     })
 
     theMarker.addListener('click', function() {
-      infowindow.open(theMap, theMarker);
-      getWiki(theLocation);
+      //infowindow.open(theMap, theMarker);
+      places(theMap, theMarker.position);
     })
   }
 
@@ -211,4 +236,67 @@ function getWiki(location) {
     var test = JSON.parse(response.body);
     console.log(test);
   })
+}
+
+
+function places(theMap, coordinates) {
+  map.panTo(coordinates);
+  map.setZoom(18);
+  var infowindow = new google.maps.InfoWindow();
+  var service = new google.maps.places.PlacesService(theMap);
+  service.nearbySearch({
+    location: coordinates,
+    radius: 500,
+    type: ['store', 'restaurant', 'lodging', 'church', 'bank', 'train_station', 'subway_station', 'food']
+  }, callback);
+
+  function callback(results, status) {
+    if(status === google.maps.places.PlacesServiceStatus.OK) {
+      for(var i = 0; i < results.length; i++) {
+        createMarker(results[i], results[i].place_id);
+        console.log(results[i].place_id);
+      }
+    }
+  }
+
+  function createMarker(place, placeId) {
+    var placeLoc = place.geometry.location;
+    var marker = new google.maps.Marker({
+      map: theMap,
+      position: place.geometry.location,
+      placeId: placeId,
+      name: place.name
+    });
+
+    google.maps.event.addListener(marker, 'click', function() {
+      placeDetails(service, marker, marker.placeId, theMap);
+    });
+
+  }
+}
+
+function placeDetails(theService, theMarker, placeID, theMap) {
+  var thePlaceId = placeID.toString();
+  var request = {placeId: thePlaceId};
+
+  theService.getDetails(request, callback);
+  function callback(place, status) {
+    if(status == google.maps.places.PlacesServiceStatus.OK) {
+      var contentString = '<div class="media-object">' +
+            '<div class="media-body">' +
+              '<b>Name: </b>' + place.name + '<br>' +
+              '<b>International Phone: </b>' + place.international_phone_number + '<br>' +
+              '<b>Rating: </b>' + place.rating + ' (out of 5)' + '<br>' +
+              '<b>Address: </b>' + place.formatted_address + '<br>' +
+              '<b>Website: </b>' + place.website + '<br>' +
+            '</div>' +
+          '</div>'
+
+      var infowindow = new google.maps.InfoWindow({
+        content: contentString
+      });
+
+      infowindow.open(theMap, theMarker);
+    }
+  }
 }
