@@ -123,13 +123,14 @@
             <div class='panel-body monster-list'>
               <div class='media' ng-repeat='monster in monsters.searchResult'>
                 <div class='media-left'>
-                  <img class='media-object profile-picture' ng-src="images/profile/{{monster.profilePicture}}" alt="...">
+                  <img class='media-object' ng-src="images/profile/{{monster.profilePicture}}" alt="monster profile picture">
                 </div>
                 <div class='media-body'>
                   <b>Name: </b> <a ng-href='{{monster.website}}'>{{monster.nameEng}} / {{monster.nameJp}}</a><br>
                   <b>First Appearance: </b>{{monster.firstAppearanceDate}}<br>
                   <b>Country of Origin: </b>{{monster.originEng}}<br>
-                  <b>Height: </b>{{monster.height}} , <b>Weight: </b>{{monster.weight}}<br>
+                  <b>Height: </b>{{monster.height}}<br>
+                  <b>Weight: </b>{{monster.weight}}<br>
                   <b>Sighted In:</b><br>
                   <ul>
                     <li ng-repeat='locations in monster.locationsEng'>{{locations}}</li>

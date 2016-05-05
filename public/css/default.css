@@ -8,15 +8,16 @@ body {
   text-align: center;
 }
 
-.profile-picture {
-  width: 50%;
-  height: 50%;
-}
-
 .monster-list {
   width: 100%;
   height: 530px;
   overflow: scroll;
+}
+
+.profilePicture {
+  width: 297px;
+  height: 297px;
+  margin: 1px;
 }
 
 /*IDs*/
