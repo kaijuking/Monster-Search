@@ -1,4 +1,10 @@
+var thePlaceDetails;
+
 var app = angular.module('monsterSearch', []);
+
+//This variable is used when displaying place details on the modal.
+
+var theTest = [{name: 'mike', age: 32, location: "Irvine"}];
 
 app.controller('monstersController', monsters);
 app.$inject = ['$http'];
@@ -10,6 +16,10 @@ function monsters($http) {
   function activate() {
     vm.test = 'test test test';
     getMonsters();
+  }
+
+  function getPlaceDetails() {
+    return thePlaceDetails;
   }
 
   function getMonsters(monster) {
@@ -25,7 +35,6 @@ function monsters($http) {
       var theLocation = {location: document.getElementById('searchMonsterName').value};
       var location = $http.post('/locationBySearchValue/', theLocation);
       location.then(function(theResults) {
-        console.log(theResults);
         var theMonsters = theResults.data[0];
         var theLocations = theResults.data[1];
         updateMultiMap(theMonsters, theLocations);
@@ -34,6 +43,7 @@ function monsters($http) {
       var theLocation = {location: monster.locationsEng};
       var location = $http.post('/location/',theLocation);
       location.then(function(mapDetails) {
+        console.log(mapDetails);
         updateMap(mapDetails, monster.nameEng, monster.iconPicture);
       })
     }
@@ -50,6 +60,14 @@ function monsters($http) {
     var monster = $http.get('/monsters/' + theMonster);
     monster.then(function(searchResult) {
       vm.searchResult = searchResult.data;
+    })
+  }
+
+  vm.profile = function(theMonster) {
+    var monster = $http.get('/profile/' + theMonster);
+    monster.then(function(profile) {
+      console.log(profile.data);
+      vm.profileResult = profile.data;
     })
   }
 
@@ -84,7 +102,7 @@ function updateMap(mapDetails, name, iconPicture) {
       var service = new google.maps.places.PlacesService(map);
       service.nearbySearch({
         location: theLocation.position,
-        radius: 500,
+        radius: 1000,
         type: ['store', 'restaurant', 'lodging', 'church', 'bank', 'train_station', 'subway_station', 'food']
       }, callback);
 
@@ -105,7 +123,6 @@ function updateMap(mapDetails, name, iconPicture) {
         });
 
         google.maps.event.addListener(marker, 'click', function() {
-          console.log('the place id is: ' + marker.placeId);
           placeDetails(service, marker, marker.placeId, map);
         });
       }
@@ -144,10 +161,6 @@ function updateMultiMap(monsters, locations) {
         break;
       }
     }
-  }
-
-  for(var i = 0; i < temp.length; i++) {
-    console.log(temp[i].location + "-" + temp[i].name);
   }
 
   for(var i = 0; i < temp.length; i++) {
@@ -207,7 +220,6 @@ function placeMarker(locationsArray, theName, thePicture, theLocation, theCoordi
     })
 
     theMarker.addListener('click', function() {
-      //infowindow.open(theMap, theMarker);
       places(theMap, theMarker.position);
     })
   }
@@ -278,17 +290,47 @@ function places(theMap, coordinates) {
 function placeDetails(theService, theMarker, placeID, theMap) {
   var thePlaceId = placeID.toString();
   var request = {placeId: thePlaceId};
+  var name = "N/A";
+  var phoneNumber = "N/A";
+  var rating = "N/A";
+  var address = "N/A";
+  var website = "N/A";
+  var id = "N/A";
 
   theService.getDetails(request, callback);
   function callback(place, status) {
     if(status == google.maps.places.PlacesServiceStatus.OK) {
+      console.log(place);
+      placeArray = {name: place.name, phone: place.international_phone_number,
+        rating: place.rating, address: place.formatted_address, website: place.website,
+        photos: place.photos};
+
+      if(place.name != undefined) {
+        name = place.name;
+      }
+      if(place.id != undefined) {
+        id = place.id;
+      }
+      if(place.international_phone_number != undefined) {
+        phoneNumber = place.international_phone_number;
+      }
+      if(place.rating != undefined) {
+        rating = place.rating + " (out of 5)";
+      }
+      if(place.formatted_address != undefined) {
+        address = place.formatted_address;
+      }
+      if(place.website != undefined) {
+        website = place.website;
+      }
       var contentString = '<div class="media-object">' +
             '<div class="media-body">' +
-              '<b>Name: </b>' + place.name + '<br>' +
-              '<b>International Phone: </b>' + place.international_phone_number + '<br>' +
-              '<b>Rating: </b>' + place.rating + ' (out of 5)' + '<br>' +
-              '<b>Address: </b>' + place.formatted_address + '<br>' +
-              '<b>Website: </b>' + place.website + '<br>' +
+              '<b>Name: </b>' + name + '<br>' +
+              '<span id="placeID"><b>ID: ' + id + '</b></span><br>' +
+              '<b>International Phone: </b>' + phoneNumber + '<br>' +
+              '<b>Rating: </b>' + rating + '<br>' +
+              '<b>Address: </b>' + address + '<br>' +
+              '<b>Website: </b>' + website + '<br>' +
             '</div>' +
           '</div>'
 
@@ -297,6 +339,17 @@ function placeDetails(theService, theMarker, placeID, theMap) {
       });
 
       infowindow.open(theMap, theMarker);
+      var theID = document.getElementById('placeID');
+      theID.setAttribute('data-value', id);
     }
   }
 }
+
+document.addEventListener('click', function(e) {
+  e.preventDefault();
+  var theTarget = e.target;
+  if(theTarget.getAttribute('data-value') === "monster-profile") {
+    console.log('hello world');
+    $('#myModal').modal('show');
+  }
+})
