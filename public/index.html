@@ -7,7 +7,7 @@
     <link rel='stylesheet' href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
   </head>
-  <body ng-app='monsterSearch' ng-init='start = true'>
+  <body ng-app='monsterSearch' ng-init='modal = false'>
 
     <div class='container' ng-controller='monstersController as monsters'>
 
@@ -92,7 +92,7 @@
             </div>
             <div class='panel-body monster-list'>
               <a href='' ng-repeat='monster in monsters.list'>
-                <div class='media' ng-click="monsters.location(monster); monsters.search(monster)">
+                <div class='media' ng-click="monsters.location(monster); monsters.search(monster); monsters.setDetails()">
                   <div class='media-left'>
                     <img class='media-object' ng-src="images/icon/{{monster.profilePicture}}" alt="...">
                   </div>
@@ -116,33 +116,18 @@
         </div>
       </div>
 
-      <div class='row' id='monsterLocationInfo'>
+      <div class='row'>
         <div class='col-md-12'>
           <div class='panel panel-default'>
-            <div class='panel-heading'>Monster/Location Info</div>
-            <div class='panel-body monster-list'>
-              <div class='media' ng-repeat='monster in monsters.searchResult'>
-                <div class='media-left'>
-                  <img class='media-object' ng-src="images/profile/{{monster.profilePicture}}" alt="monster profile picture">
-                </div>
-                <div class='media-body'>
-                  <b>Name: </b> <a ng-href='{{monster.website}}'>{{monster.nameEng}} / {{monster.nameJp}}</a><br>
-                  <b>First Appearance: </b>{{monster.firstAppearanceDate}}<br>
-                  <b>Country of Origin: </b>{{monster.originEng}}<br>
-                  <b>Height: </b>{{monster.height}}<br>
-                  <b>Weight: </b>{{monster.weight}}<br>
-                  <b>Sighted In:</b><br>
-                  <ul>
-                    <li ng-repeat='locations in monster.locationsEng'>{{locations}}</li>
-                  </ul>
-                  <b>Appeared In:</b><br>
-                  <ul>
-                    <li ng-repeat='movies in monster.movieNamesEng'>{{movies}}</li>
-                  </ul>
-                  <b>Powers:</b><br>
-                  <ul>
-                    <li ng-repeat='powers in monster.powersEng'>{{powers}}</li>
-                  </ul>
+            <div class='panel-heading'>Monster Profiles</div>
+            <div class='panel-body'>
+              <div class='row' id="monsterLocationInfo">
+                <div class='col-md-3' ng-repeat='monster in monsters.searchResult'>
+                  <div class='media'>
+                    <div class='media-middle'>
+                      <a href='' ng-click="monsters.profile(monster.nameEng)"><img class='media-object monster-profile-picture' data-id="monster-profile"  data-value="monster-profile" ng-src="images/profile/{{monster.profilePicture}}" alt="monster profile picture"></a>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -150,7 +135,47 @@
         </div>
       </div>
 
+      <div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog">
+          <div class="modal-content" ng-repeat='monster in monsters.profileResult'>
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <span><img class='media-object' data-id="monster-profile"  data-value="monster-profile" ng-src="images/icon/{{monster.profilePicture}}" alt="monster profile picture"></span><b class="modal-title">{{monster.nameEng}}</b>
+            </div>
+            <div class="modal-body">
+              <div class='container'>
+                <b>Name: </b> <a ng-href='{{monster.website}}'>{{monster.nameEng}} / {{monster.nameJp}}</a><br>
+                <b>First Appearance: </b>{{monster.firstAppearanceDate}}<br>
+                <b>Country of Origin: </b>{{monster.originEng}}<br>
+                <b>Height: </b>{{monster.height}}<br>
+                <b>Weight: </b>{{monster.weight}}<br>
+                <b>Sighted In:</b><br>
+                <ul>
+                  <li ng-repeat='locations in monster.locationsEng'>{{locations}}</li>
+                </ul>
+                <b>Appeared In:</b><br>
+                <ul>
+                  <li ng-repeat='movies in monster.movieNamesEng'>{{movies}}</li>
+                </ul>
+                <b>Powers:</b><br>
+                <ul>
+                  <li ng-repeat='powers in monster.powersEng'>{{powers}}</li>
+                </ul>
+              </div>
+              <hr id='monster-profile-hr'>
+              <div class='container' id='profile-picture-modal'>
+                <span ng-repeat='image in monster.images'><img class='media-object profile-picture-modal' ng-src="images/profile/{{image}}" alt="monster profile picture"></span>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
     <script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-route.min.js'></script>

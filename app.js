@@ -42,6 +42,28 @@ app.get('/monsters/:monster', function(req, res) {
   });
 });
 
+app.get('/profile/:monster', function(req, res) {
+  var name = req.params.monster;
+  var monster = name.toString();
+
+  myClient.connect(url, function(error, database) {
+    if(error) {
+      console.log(error);
+    } else {
+      var myCollection = database.collection('monsters');
+      myCollection.find({nameEng: monster}).toArray(function(error, docs) {
+        if(error) {
+          res.send(error);
+          database.close();
+        } else {
+          res.send(docs);
+          database.close();
+        };
+      });
+    };
+  });
+});
+
 app.post('/locationBySearchValue/', jsonParser, function(req, res) {
   var key = 'AIzaSyDgL9xZqzlR727rK2eXAWS-tcqUiRVovW8';
   resultsArray = [];

@@ -20,6 +20,22 @@ body {
   margin: 1px;
 }
 
+.monster-profile-picture {
+  width: 198px;
+  height: 198px;
+  margin: 2px;
+  text-align: center;
+}
+
+.monster-profile-picture:hover {
+  border: 2px solid blue;
+}
+
+.profile-picture-modal {
+  width: 198px;
+  height: 198px;
+}
+
 /*IDs*/
 #map {
   width: 100%;
@@ -44,4 +60,12 @@ body {
   background-color: black;
   color: white;
   text-align: center;
+}
+
+#monster-profile-hr {
+  width: 50%;
+}
+
+#profile-picture-modal {
+  overflow: scroll;
 }
