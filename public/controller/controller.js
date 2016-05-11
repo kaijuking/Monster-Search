@@ -1,11 +1,4 @@
-var thePlaceDetails;
-
 var app = angular.module('monsterSearch', []);
-
-//This variable is used when displaying place details on the modal.
-
-var theTest = [{name: 'mike', age: 32, location: "Irvine"}];
-
 app.controller('monstersController', monsters);
 app.$inject = ['$http'];
 
@@ -14,12 +7,7 @@ function monsters($http) {
   activate();
 
   function activate() {
-    vm.test = 'test test test';
     getMonsters();
-  }
-
-  function getPlaceDetails() {
-    return thePlaceDetails;
   }
 
   function getMonsters(monster) {
@@ -28,6 +16,10 @@ function monsters($http) {
     allMonsters.then(function(list) {
       vm.list = list.data;
     })
+  }
+
+  function testPrint() {
+    console.log('test print');
   }
 
   vm.location = function(monster) {
@@ -41,7 +33,7 @@ function monsters($http) {
       })
     } else {
       var theLocation = {location: monster.locationsEng};
-      var location = $http.post('/location/',theLocation);
+      var location = $http.post('/location/', theLocation);
       location.then(function(mapDetails) {
         console.log(mapDetails);
         updateMap(mapDetails, monster.nameEng, monster.iconPicture);
@@ -69,6 +61,35 @@ function monsters($http) {
       console.log(profile.data);
       vm.profileResult = profile.data;
     })
+  }
+
+  vm.sighting = function() {
+    var monsterName = document.getElementById('addMonsterName').value;
+    var city = document.getElementById('addCity').value;
+    var state = document.getElementById('addState').value;
+    var country = document.getElementById('addCountry').value;
+    var weight = document.getElementById('monsterWeight').value;
+    var height = document.getElementById('monsterHeight').value;
+    var date = document.getElementById('sightedDate').value;
+    var origin = document.getElementById('monsterOrigin').value;
+
+    if(monsterName != '' && city != '' && state != '' && country != '') {
+      var theSighting = {name: monsterName, city: city, state: state, country: country, profilePicture: "gforce.jpg", iconPicture: "gforce.jpg",
+                         origin: origin, weight: weight, height: height, date: date};
+
+      var sighting = $http.post('/sighting/', theSighting);
+      sighting.then(function(details) {
+        vm.sightingDetails = data.details;
+      })
+    } else {
+      var warning = document.getElementById('add-warning-alert');
+      warning.setAttribute('class', 'alert alert-warning alert-dismissible show');
+    }
+
+  }
+
+  vm.refresh = function() {
+    getMonsters();
   }
 
 }
@@ -175,8 +196,10 @@ function updateMultiMap(monsters, locations) {
 
 }
 
+//This function is used to place a monster icon on the map at locations where the monster has appeared.
 function placeMarker(locationsArray, theName, thePicture, theLocation, theCoordinates, theMap) {
-
+  //Since a single monster can have multiple locations this if/else is used to determine if a location has already appeared.
+  //If the location hasn't already appeared go through the if statement.
   if(locationsArray.includes(theLocation) === false) {
     locationsArray.push(theLocation);
 
@@ -189,7 +212,6 @@ function placeMarker(locationsArray, theName, thePicture, theLocation, theCoordi
     });
 
     theMarker.setMap(theMap);
-
     var monsterInfo = theMarker.title + '--' + theMarker.position;
     var infowindow = new google.maps.InfoWindow({
       content: monsterInfo
@@ -202,6 +224,8 @@ function placeMarker(locationsArray, theName, thePicture, theLocation, theCoordi
     })
 
   } else {
+    //If the location has already appeared than take the coordinates of that location and subtract a random number.
+    //This is necessary because you can't have multiple markers on the same location (i.e. with the same set of coordinates).
     var random = Math.floor((Math.random() * (1)) + 5);
     var newCoordinates = {lat: theCoordinates.lat - (random * 0.05), lng: theCoordinates.lng - (random * 0.05)};
     var theMarker = new google.maps.Marker({
@@ -213,7 +237,6 @@ function placeMarker(locationsArray, theName, thePicture, theLocation, theCoordi
     });
 
     theMarker.setMap(theMap);
-
     var monsterInfo = theMarker.title + '--' + theMarker.position;
     var infowindow = new google.maps.InfoWindow({
       content: monsterInfo
@@ -226,31 +249,7 @@ function placeMarker(locationsArray, theName, thePicture, theLocation, theCoordi
 
 }
 
-function getWiki(location) {
-  console.log(location);
-  // var allMonsters = $http.post('/wiki/', location);
-  // allMonsters.then(function(data) {
-  //   var results = JSON.parse(data);
-  //   console.log(results);
-  // })
-
-  var theData = {location: location};
-  var data = JSON.stringify(theData);
-
-  var wiki = new XMLHttpRequest();
-  wiki.open('POST', '/wiki', true);
-  wiki.setRequestHeader('Content-Type', 'application/json');
-  wiki.send(data);
-
-  wiki.addEventListener('load', function() {
-    var response = JSON.parse(wiki.responseText);
-    console.log(response.body);
-    var test = JSON.parse(response.body);
-    console.log(test);
-  })
-}
-
-
+//This function is used to get the type of places based upon a given set of coordinates and where to the place (i.e. the map).
 function places(theMap, coordinates) {
   map.panTo(coordinates);
   map.setZoom(18);
@@ -258,7 +257,7 @@ function places(theMap, coordinates) {
   var service = new google.maps.places.PlacesService(theMap);
   service.nearbySearch({
     location: coordinates,
-    radius: 500,
+    radius: 1000,
     type: ['store', 'restaurant', 'lodging', 'church', 'bank', 'train_station', 'subway_station', 'food']
   }, callback);
 
@@ -266,7 +265,6 @@ function places(theMap, coordinates) {
     if(status === google.maps.places.PlacesServiceStatus.OK) {
       for(var i = 0; i < results.length; i++) {
         createMarker(results[i], results[i].place_id);
-        console.log(results[i].place_id);
       }
     }
   }
@@ -283,10 +281,10 @@ function places(theMap, coordinates) {
     google.maps.event.addListener(marker, 'click', function() {
       placeDetails(service, marker, marker.placeId, theMap);
     });
-
   }
 }
 
+//This function is used to populate the Google Maps Infowindow when the user clicks on the red marker icons.
 function placeDetails(theService, theMarker, placeID, theMap) {
   var thePlaceId = placeID.toString();
   var request = {placeId: thePlaceId};
@@ -349,7 +347,23 @@ document.addEventListener('click', function(e) {
   e.preventDefault();
   var theTarget = e.target;
   if(theTarget.getAttribute('data-value') === "monster-profile") {
-    console.log('hello world');
     $('#myModal').modal('show');
   }
 })
+
+// var monster-search = document.getElementById('btnAddMonsters');
+// addBtn.addEventListener('click', function(e) {
+//   var monsterName = document.getElementById('addMonsterName');
+//   var city = document.getElementById('addCity');
+//   var state = document.getElementById('addState');
+//   var country = document.getElementById('addCountry');
+//   var weight = document.getElementById('monsterWeight');
+//   var height = document.getElementById('monsterHeight');
+//   var date = document.getElementById('sightedDate');
+//   var origin = document.getElementById('monsterOrigin');
+//
+//   if(monsterName != null && city != null && state != null && country != null) {
+//     addBtn.removeAttribute('disabled');
+//   }
+//
+// })
