@@ -36,6 +36,10 @@ body {
   height: 198px;
 }
 
+.margin-right {
+  margin-right: 20px;
+}
+
 /*IDs*/
 #map {
   width: 100%;
@@ -64,8 +68,4 @@ body {
 
 #monster-profile-hr {
   width: 50%;
-}
-
-#profile-picture-modal {
-  overflow: scroll;
 }

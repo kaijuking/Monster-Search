@@ -8,9 +8,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
   </head>
   <body ng-app='monsterSearch' ng-init='modal = false'>
-
     <div class='container' ng-controller='monstersController as monsters'>
-
       <div class='row'>
         <div class='col-md-12'>
           <div class="jumbotron" id='jumbotron'>
@@ -18,13 +16,6 @@
           </div>
         </div>
       </div>
-
-      <div class='row'>
-        <div class='col-md-12'>
-
-        </div>
-      </div>
-
       <div class='panel panel-default' id='monster-search'>
         <div class='panel-body'>
           <div class='row'>
@@ -60,21 +51,49 @@
                   <br>
                   <form class='form-inline'>
                     <div class='form-group'>
-                      <label class='sr-only' for='reportCity'>City</label>
-                      <input type='text' class='form-control' id='reportCity' placeholder='city name'>
+                      <label class='sr-only' for='addMonsterName'>Monster Name</label>
+                      <input type='text' class='form-control' id='addMonsterName' placeholder='monster name'>
                     </div>
                     <div class='form-group'>
-                      <label class='sr-only' for='reportState'>City</label>
-                      <input type='text' class='form-control' id='reportState' placeholder='state/prefecture name'>
+                      <label class='sr-only' for='addCity'>City</label>
+                      <input type='text' class='form-control' id='addCity' placeholder='city name'>
+                    </div>
+                    <div class='form-group'>
+                      <label class='sr-only' for='addState'>City</label>
+                      <input type='text' class='form-control' id='addState' placeholder='state/prefecture name'>
                     </div>
                     <div class='form-group'>
                       <div class='input-group'>
-                        <label class='sr-only' for='reportCountry'>City</label>
-                        <input type='text' class='form-control' id='reportCountry' placeholder='country name'>
-                        <span class='input-group-btn'>
-                          <button class='btn btn-default' type='button'>Search</button>
-                        </span>
+                        <label class='sr-only' for='addCountry'>City</label>
+                        <input type='text' class='form-control' id='addCountry' placeholder='country name'>
                       </div>
+                    </div>
+                  </form>
+                  <br>
+                  <form class='form-inline'>
+                    <div class='form-group'>
+                      <label class='sr-only' for='monsterHeight'>Monster Height</label>
+                      <input type='text' class='form-control' id='monsterHeight' placeholder='monster height (meters)'>
+                    </div>
+                    <div class='form-group'>
+                      <label class='sr-only' for='reportCity'>Monster Weight</label>
+                      <input type='text' class='form-control' id='monsterWeight' placeholder='monster weight (tons)'>
+                    </div>
+                    <div class='form-group'>
+                      <label class='sr-only' for='reportState'>Country of Origin</label>
+                      <input type='text' class='form-control' id='monsterOrigin' placeholder='country of origin'>
+                    </div>
+                    <div class='form-group'>
+                      <input id='sightedDate' type='date' class='form-control' placeholder='sighting date'>
+                    </div>
+                  </form>
+                  <br>
+                  <form class='form-inline'>
+                    <div class='form-group'>
+                      <button class='btn btn-default' id="btnAddMonsters" ng-click="monsters.sighting(); monsters.refresh()" type='button'>Add</button>
+                    </div>
+                    <div class="alert alert-warning alert-dismissible hide" role="alert" id='add-warning-alert'>
+                      <strong>Warning!</strong> You must enter a monster's name, city, state/prefecture and country.
                     </div>
                   </form>
                 </div>
@@ -136,35 +155,37 @@
       </div>
 
       <div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-lg">
           <div class="modal-content" ng-repeat='monster in monsters.profileResult'>
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-              <span><img class='media-object' data-id="monster-profile"  data-value="monster-profile" ng-src="images/icon/{{monster.profilePicture}}" alt="monster profile picture"></span><b class="modal-title">{{monster.nameEng}}</b>
+              <b>Name: </b>{{monster.nameEng}}
             </div>
             <div class="modal-body">
-              <div class='container'>
-                <b>Name: </b> <a ng-href='{{monster.website}}'>{{monster.nameEng}} / {{monster.nameJp}}</a><br>
-                <b>First Appearance: </b>{{monster.firstAppearanceDate}}<br>
-                <b>Country of Origin: </b>{{monster.originEng}}<br>
-                <b>Height: </b>{{monster.height}}<br>
-                <b>Weight: </b>{{monster.weight}}<br>
-                <b>Sighted In:</b><br>
-                <ul>
-                  <li ng-repeat='locations in monster.locationsEng'>{{locations}}</li>
-                </ul>
-                <b>Appeared In:</b><br>
-                <ul>
-                  <li ng-repeat='movies in monster.movieNamesEng'>{{movies}}</li>
-                </ul>
-                <b>Powers:</b><br>
-                <ul>
-                  <li ng-repeat='powers in monster.powersEng'>{{powers}}</li>
-                </ul>
-              </div>
-              <hr id='monster-profile-hr'>
-              <div class='container' id='profile-picture-modal'>
-                <span ng-repeat='image in monster.images'><img class='media-object profile-picture-modal' ng-src="images/profile/{{image}}" alt="monster profile picture"></span>
+              <div class='row'>
+                <div class='col-md-4 margin-right'>
+                  <img class='media-object profilePicture' data-id="monster-profile"  data-value="monster-profile" ng-src="images/profile/{{monster.profilePicture}}" alt="monster profile picture">
+                </div>
+                <div class='col-md-6'>
+                  <b>Alternate Name(s): </b> {{monster.nameJp}}<br>
+                  <b>Website: </b> <a ng-href='{{monster.website}}'>{{monster.website}}</a><br>
+                  <b>First Appearance: </b>{{monster.firstAppearanceDate}}<br>
+                  <b>Country of Origin: </b>{{monster.originEng}}<br>
+                  <b>Height: </b>{{monster.height}}<br>
+                  <b>Weight: </b>{{monster.weight}}<br>
+                  <b>Sighted In:</b><br>
+                  <ul>
+                    <li ng-repeat='locations in monster.locationsEng'>{{locations}}</li>
+                  </ul>
+                  <b>Appeared In:</b><br>
+                  <ul>
+                    <li ng-repeat='movies in monster.movieNamesEng'>{{movies}}</li>
+                  </ul>
+                  <!-- <b>Powers:</b><br>
+                  <ul>
+                    <li ng-repeat='powers in monster.powersEng'>{{powers}}</li>
+                  </ul> -->
+                </div>
               </div>
             </div>
             <div class="modal-footer">
@@ -173,9 +194,7 @@
           </div>
         </div>
       </div>
-
     </div>
-
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
     <script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-route.min.js'></script>

@@ -13,15 +13,12 @@ var url = process.env.MONGODB_URI || 'mongodb://localhost/monsterSearch';
 var defaultMiddleware = express.static('./public');
 app.use(defaultMiddleware);
 
-/*Required Data Objects*/
-var allLocations = require('./locations.js');
-var allMonsters = require('./monsters.js');
+/*Required Variables*/
 var resultsArray;
 var mapDetails;
 
 app.get('/monsters/:monster', function(req, res) {
   var name = '"\""' + req.params.monster + '\"""'
-  console.log('the name is: ' + name);
   var theMonster = (req.params.monster === 'undefined') ? {} : {$text: {$search: name}};
 
   myClient.connect(url, function(error, database) {
@@ -88,8 +85,6 @@ app.post('/locationBySearchValue/', jsonParser, function(req, res) {
             }
           }
 
-          console.log('the count is: ' + count);
-
           for(var i = 0; i < docs.length; i++) {
             for(var y = 0; y < docs[i].locationsEng.length; y++) {
               tmpArray.push({name: docs[i].nameEng, picture: docs[i].iconPicture, location: docs[i].locationsEng[y]});
@@ -125,7 +120,6 @@ app.post('/locationBySearchValue/', jsonParser, function(req, res) {
 
 app.post('/location/', jsonParser, function(req, res) {
   resultsArray = [];
-  console.log(req.body.location);
   var locationArray = req.body.location;
   var key = 'AIzaSyDgL9xZqzlR727rK2eXAWS-tcqUiRVovW8';
 
@@ -144,6 +138,38 @@ app.post('/location/', jsonParser, function(req, res) {
   };
 })
 
+app.post('/sighting', jsonParser, function(req, res) {
+  var name = req.body.name;
+  var city = req.body.city;
+  var state = req.body.state;
+  var country = req.body.country;
+  var theLocation = city + ' ' + state + ' ' + country;
+  var profilePicture = req.body.profilePicture;
+  var iconPicture = req.body.iconPicture;
+  var origin = req.body.origin;
+  var height = req.body.height + " meters";
+  var weight = req.body.weight + " metric tons";
+  var date = req.body.date;
+  var newSighting = {nameEng: name, locationsEng: [theLocation], profilePicture: profilePicture, iconPicture: iconPicture, originEng: origin, height: height, weight: weight, firstAppearanceDate: date};
+
+  myClient.connect(url, function(error, database) {
+    if(error) {
+      console.log(error);
+    } else {
+      var myCollection = database.collection('monsters');
+      myCollection.insert(newSighting, function(error, result) {
+        if(error) {
+          console.log(error);
+          database.close();
+        } else {
+          console.log(result);
+          database.close();
+        }
+      })
+    }
+  })
+})
+
 app.get('/defaultMarkers', function(req, res) {
   myClient.connect(url, function(error, database) {
     if(error) {
@@ -159,17 +185,6 @@ app.get('/defaultMarkers', function(req, res) {
           database.close();
         }
       })
-    }
-  })
-})
-
-app.post('/wiki', jsonParser, function(req, res) {
-  console.log(req.body.location);
-  var theLocation = req.body.location;
-  var theURL = 'https://en.wikipedia.org/w/api.php?action=query&titles=' + theLocation + '&prop=revisions&rvprop=content&format=json';
-  request(theURL, function(error, response, body) {
-    if(!error && response.statusCode == 200) {
-      res.send(response);
     }
   })
 })
