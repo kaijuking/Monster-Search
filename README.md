@@ -10,11 +10,11 @@ For a live demo of my project please go here: http://monstersearch.herokuapp.com
 <li>Search for a monster</li>
 <li>View details about the monster</li>
 <li>Add your own monster sighting</li>
-<li>Update your settings like your Realname and Username</li>
 </ul>
 
-The map, markers and place details are accomplished by using the following:
+# Technologies
 <ul>
-<li>Google Maps API</li>
-<li>Goole Locations and Places API</li>
+<li>HTML, CSS, Bootstrap, Angular</li>
+<li>Mongo DB: created and imported my own JSON file into a Mongo Database which is hosted via a Heroku addon called mLab</li>
+<li>Google Map/Locations/Places API: used to generated the map, markers, places and the place details</li>
 </ul>
